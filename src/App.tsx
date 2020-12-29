@@ -1,41 +1,51 @@
-import React, { useEffect } from 'react';
-import { HashRouter, Link, Route, RouteProps, Router, useHistory } from "react-router-dom";
-import './App.css';
-import A from './pages/A';
-import B from './pages/B';
-import C from './pages/C';
-import D from './pages/D';
-
-import { adminRoutes, publicRoutes } from "./routes";
-
-// const isChange:boolean = true;
-
-
-const role = 'visitor'
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { UnregisterCallback } from "history";
+import "./App.css";
+import routes from "./routes";
+import { renderRoutes } from "./renderRoutes.js";
 
 function App() {
-  return (
-    <HashRouter>
-      <h1>首页</h1>
-      <Link to='/a'><button>跳转 A</button></Link>
-      <Link to='/b'><button>跳转 B</button></Link>
-      <Link to='/c'><button>跳转 C</button></Link>
-      <Link to='/d'><button>跳转 D</button></Link>
-      {
-        publicRoutes.map(route=>{
-          return <Route key={route.path} path={route.path} component={route.component} exact={route.exact} />
-        })
-      }
-      {
-        adminRoutes.map(route=>{
-          if(route.role.includes(role)){
-            return <Route key={route.path} path={route.path} component={route.component} exact={route.exact} />
-          }
-          return null
-        })
-      }
-    </HashRouter>
-  );
+    const [txt, setTxt] = useState("1");
+    const oldTxtRef:MutableRefObject<string>= useRef('1')
+    const history = useHistory();
+    const blockRef: MutableRefObject<UnregisterCallback | undefined> = useRef();
+    const changeTxt = useCallback((e) => {
+        setTxt(e.target.value);
+    }, []);
+    const gotoB = useCallback(() => {
+        history.push("/b");
+    }, [history]);
+
+    useEffect(()=>{
+        if(txt !== oldTxtRef.current){
+            // 阻止路由跳转
+            blockRef.current = history.block();
+        }else{
+            // 不再阻止路由跳转
+            blockRef.current && blockRef.current();
+        }
+    }, [txt, history])
+
+    return (
+        <div>
+            <Link to="/a">
+                <button>跳转 A</button>
+            </Link>
+            <Link to="/b">
+                <button>跳转 B</button>
+            </Link>
+            <Link to="/c">
+                <button>跳转 C</button>
+            </Link>
+            <Link to="/d">
+                <button>跳转 D</button>
+            </Link>
+            <input type="text" value={txt} onChange={changeTxt} />
+            <button onClick={gotoB}>前往 B 页面</button>
+            {renderRoutes(routes)}
+        </div>
+    );
 }
 
 export default App;

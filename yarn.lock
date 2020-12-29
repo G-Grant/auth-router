@@ -1789,6 +1789,15 @@
   dependencies:
     "@types/react" "^16"
 
+"@types/react-router-config@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npm.taobao.org/@types/react-router-config/download/@types/react-router-config-5.0.2.tgz?cache=0&sync_timestamp=1608399812372&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-router-config%2Fdownload%2F%40types%2Freact-router-config-5.0.2.tgz#4d3b52e71ed363a1976a12321e67b09a99ad6d10"
+  integrity sha1-TTtS5x7TY6GXahIyHmewmpmtbRA=
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+    "@types/react-router" "*"
+
 "@types/react-router-dom@^5.1.6":
   version "5.1.6"
   resolved "https://registry.npm.taobao.org/@types/react-router-dom/download/@types/react-router-dom-5.1.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-router-dom%2Fdownload%2F%40types%2Freact-router-dom-5.1.6.tgz#07b14e7ab1893a837c8565634960dc398564b1fb"
